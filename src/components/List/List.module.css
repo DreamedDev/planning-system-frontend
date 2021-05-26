@@ -1,0 +1,28 @@
+.List{
+
+}
+
+.Labels{
+    margin: 0 20px;
+    margin-top: 15px;
+    padding: 10px 25px;
+    color: var(--textColor);
+}
+
+.Labels > p {
+    margin: 0;
+}
+
+.Row{
+    align-items: center;
+    background: var(--primaryColorBackground);
+    padding: 0 25px;
+    border-radius: 8px;
+    border: 1px solid var(--dividerColor);
+    box-shadow: 0 3px 1px -2px var(--dividerColor);
+    margin: 10px 20px;
+}
+
+.List > .Row:first-of-type{
+    margin-top: 50px;
+}
