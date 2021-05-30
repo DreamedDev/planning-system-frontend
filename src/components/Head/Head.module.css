@@ -3,6 +3,7 @@
     color: var(--primaryColorBackground);
     display: flex;
     align-items: center;
+    padding: 5px 0;
 }
 
 .Head > img:first-of-type{

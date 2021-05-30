@@ -1,20 +1,13 @@
 import styles from './List.module.css'
 
-const Row = () => {
-    return(
-        <div className={styles.Row}>
-            Row
-        </div>
-    )
-}
-
-const List = ({labels, sizing, data, template}) => {
+const List = ({labels, sizing, data, template, onClick, active, cursor='auto'}) => {
 
     const gridLayout = {
         display: 'grid',
         alignContent: "start",
         gridTemplateColumns: sizing,
-        gap: "25px"
+        gap: "25px",
+        cursor: cursor
     }
 
     return(
@@ -25,7 +18,7 @@ const List = ({labels, sizing, data, template}) => {
                 ))}
             </div>
             {data.map((rowData, index)=>(
-                <div style={gridLayout} className={styles.Row}>
+                <div style={gridLayout} className={active===index ? styles.ActiveRow : styles.Row} onClick={()=>onClick(index)}>
                     {template(index+1, rowData)}
                 </div>
             ))}

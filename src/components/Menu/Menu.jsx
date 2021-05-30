@@ -14,31 +14,31 @@ const Option = ({icon, text}) => {
 const Menu = () => {
     return(
         <div className={styles.Menu}>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/employers'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/employers'>
                 <Option icon={<Person/>} text='Pracownicy'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/teams'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/teams'>
                 <Option icon={<People/>} text='Teamy'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/tasks'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/tasks'>
                 <Option icon={<Assignment/>} text='Zadania'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/tools'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/tools'>
                 <Option icon={<Build/>} text='Narzędzia'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/materials'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/materials'>
                 <Option icon={<Layers/>} text='Zasoby'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/reports'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/reports'>
                 <Option icon={<Description/>} text='Raporty'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/products'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/products'>
                 <Option icon={<ShoppingCart/>} text='Produkty'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/finance'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/finance'>
                 <Option icon={<AttachMoney/>} text='Finanse'/>
             </NavLink>
-            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/analitics'>
+            <NavLink activeClassName={styles.ActiveLink} className={styles.Link} to='/admin/analytics'>
                 <Option icon={<Assessment/>} text='Zestawienia'/>
             </NavLink>
         </div>
