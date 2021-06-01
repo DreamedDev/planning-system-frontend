@@ -1,7 +1,7 @@
 import styles from './Body.module.css'
 import {Route} from 'react-router-dom'
 import Employers from "../../pages/AdminPages/Employers";
-import Teams from "../../pages/AdminPages/Teams";
+import Teams from "../../pages/AdminPages/Teams/Teams";
 import Tasks from "../../pages/AdminPages/Tasks";
 import Tools from "../../pages/AdminPages/Tools";
 import Materials from "../../pages/AdminPages/Materials";
@@ -47,7 +47,7 @@ const Body = () => {
             <Route path='/admin/employers' exact render={()=>(<Redirect to='/admin/employers/active'/>)}/>
             <Route path='/admin/employers/active' render={()=>(<Employers data={employersDataActive} setData={setEmployersDataActive} reversedData={employersDataArchival} setReversedData={setEmployersDataArchival}/>)} />
             <Route path='/admin/employers/archival' render={()=>(<Employers data={employersDataArchival} setData={setEmployersDataArchival} reversedData={employersDataActive} setReversedData={setEmployersDataActive}/>)} />
-            <Route path='/admin/teams' exact render={()=>(<Redirect to='/admin/teams/0'/>)}/>
+            {/*<Route path='/admin/teams' exact render={()=>(<Redirect to='/admin/teams/0'/>)}/>*/}
             <Route path='/admin/teams' render={()=>(<Teams data={teamsData} setData={setTeamsData}/>)}/>
             <Route path='/admin/tasks' component={Tasks}/>
             <Route path='/admin/tools' component={Tools}/>

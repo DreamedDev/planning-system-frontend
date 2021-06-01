@@ -1,6 +1,6 @@
 import styles from './List.module.css'
 
-const List = ({labels, sizing, data, template, onClick, active, cursor='auto'}) => {
+const List = ({labels, sizing, data, template, onClick=(nr)=>{}, active, cursor='auto'}) => {
 
     const gridLayout = {
         display: 'grid',
@@ -13,12 +13,14 @@ const List = ({labels, sizing, data, template, onClick, active, cursor='auto'}) 
     return(
         <div className={styles.List}>
             <div style={gridLayout} className={styles.Labels}>
-                {labels.map((label)=>(
-                    <p>{label}</p>
+                {labels.map((label, index)=>(
+                    <div key={index}>
+                        <p>{label}</p>
+                    </div>
                 ))}
             </div>
             {data.map((rowData, index)=>(
-                <div style={gridLayout} className={active===index ? styles.ActiveRow : styles.Row} onClick={()=>onClick(index)}>
+                <div key={index} style={gridLayout} className={active===index ? styles.ActiveRow : styles.Row} onClick={()=>onClick(index)}>
                     {template(index+1, rowData)}
                 </div>
             ))}

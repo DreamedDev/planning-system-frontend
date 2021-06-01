@@ -3,6 +3,12 @@ import Button from "../Button/Button";
 
 import {Close, Add} from '@material-ui/icons';
 import {useEffect, useState} from "react";
+import modalStyles from "./Modal.module.css";
+
+export const openDialog = (id='modal') =>{
+    const modal = document.getElementById(id)
+    modal.classList.add(modalStyles.ModalVisible)
+}
 
 const Modal = ({title, inputs=[], id='modal', onClick, onCleaning=()=>{}, validate, setValidate}) => {
 
@@ -24,8 +30,10 @@ const Modal = ({title, inputs=[], id='modal', onClick, onCleaning=()=>{}, valida
             <div className={styles.ModalContainer}>
                 <h2>{title}</h2>
                 <div className={styles.Inputs}>
-                    {inputs.map((input)=>(
-                        input
+                    {inputs.map((input, index)=>(
+                        <div key={index}>
+                            {input}
+                        </div>
                     ))}
                 </div>
                 <div className={styles.Buttons}>
