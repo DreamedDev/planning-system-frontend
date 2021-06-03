@@ -3,30 +3,29 @@ import {del, get} from "../../../api/RestApi";
 import Text from "../../../components/Text/Text";
 import DoubleLineText from "../../../components/DoubleLineText/DoubleLineText";
 import Button from "../../../components/Button/Button";
-import {DeleteForever} from "@material-ui/icons";
+import {Add, DeleteForever, People} from "@material-ui/icons";
 import {useEffect, useState} from "react";
 import List from "../../../components/List/List";
-import {getTeamEmployers} from "./Methods";
+import {addEmployerToTeam, deleteEmployer, getTeamEmployers, getTeamModalInputs, saveTeam} from "./Methods";
 import {useDispatch, useSelector} from "react-redux";
-import {setTeamEmployers} from "../../../redux/actions";
+import {
+    clearAllTeam, setTeamCity,
+    setTeamEmployerId, setTeamEmployerNr,
+    setTeamEmployers,
+    setTeamEmployerTeamId,
+    setTeamEmployerUsername, setTeamEmployerValidation, setTeamName, setTeamUsername, setTeamValidation
+} from "../../../redux/actions";
+import Modal, {openDialog} from "../../../components/Modal/Modal";
+import Input from "../../../components/Input/Input";
 
 export const TeamsList = ({data, setData}) => {
     const teamEmployers = useSelector(state => state.teamEmployers)
+    const addTeam = useSelector(state => state.addTeam)
+    const addTeamEmployer = useSelector(state => state.addTeamEmployer)
     const dispatch = useDispatch();
-    const history = useHistory();
     const labels = ['Nr', 'Nazwa', 'Placówka', 'Brygadzista', '']
     const sizing = '0.2fr 1fr 1fr 1fr 120px'
-    const deleteMethod = (id) => {
-        const putExpiringEmployerAsync = async () => {
-            try {
-                await del('http://localhost:8080/api/teams/'+id, sessionStorage.getItem('JWT'))
-                setData(data.filter((team) => team.id !== id))
-            }catch (exception){
-
-            }
-        }
-        putExpiringEmployerAsync()
-    }
+    const deleteMethod = (id) => deleteEmployer(id, data, setData)
     const template = (nr, rowData) => {
         return [
             <Text content={nr} variant='bold'/>,
@@ -39,20 +38,36 @@ export const TeamsList = ({data, setData}) => {
         ]
     }
     const getTeamEmployerList = (nr) => {
-        //history.push("/admin/teams/"+data[nr].id);
-        setActive(nr)
+        dispatch(setTeamEmployerNr(nr))
         getTeamEmployers(data[nr].id, teamEmployers, (employers)=>dispatch(setTeamEmployers(employers)))
+        dispatch(setTeamEmployerTeamId(data[nr].id))
     }
-    const [active, setActive] = useState(-1)
+    const modalInputs = getTeamModalInputs(addTeam, (name)=>dispatch(setTeamName(name)), (city)=>dispatch(setTeamCity(city)), (username)=>dispatch(setTeamUsername(username)))
+    const modalOnClick = () => saveTeam(addTeam, data, setData)
     return(
-        <List labels={labels} sizing={sizing} template={template} data={data} onClick={getTeamEmployerList} active={active} cursor='pointer'/>
+        <>
+            <List labels={labels} sizing={sizing} template={template} data={data} onClick={getTeamEmployerList} active={addTeamEmployer.nr} cursor='pointer'/>
+            <Modal title='Dodaj Team' inputs={modalInputs} onClick={modalOnClick} onCleaning={()=>dispatch(clearAllTeam())} validate={addTeam.validation} setValidate={(validation)=>dispatch(setTeamValidation(validation))}/>
+            <div className='Right'>
+                <Button icon={<Add fontSize='small'/>} text='Dodaj' onClick={() => openDialog()}/>
+            </div>
+        </>
+
     )
 }
 
 export const TeamEmployersList = () => {
+    const addTeamEmployer = useSelector(state => state.addTeamEmployer)
+    const dispatch = useDispatch();
     const teamEmployers = useSelector(state => state.teamEmployers)
-    const labels = ['Nr', 'Imię i Nazwisko', 'Wiek', 'Stanowisko', 'Wynagrodzenie']
-    const sizing = '0.2fr 1.1fr 0.5fr 0.8fr 0.8fr'
+    const history = useHistory();
+    const labels = ['Nr', 'Imię i Nazwisko', 'Wiek', 'Stanowisko', 'Wynagrodzenie', '']
+    const sizing = '0.2fr 1.1fr 0.5fr 0.8fr 1fr 120px'
+    const deleteMethod = (username) => {
+        //addTeamEmployer.username
+        //dispatch(setTeamEmployerUsername(username))
+        addEmployerToTeam(addTeamEmployer, addTeamEmployer.teamId, null, username, teamEmployers, (employers)=>dispatch(setTeamEmployers(employers)))
+    }
     const template = (nr, rowData) => {
         return [
             <Text content={nr} variant='bold'/>,
@@ -60,9 +75,23 @@ export const TeamEmployersList = () => {
             <Text content={rowData.age + ' lat'}/>,
             <Text content={rowData.position}/>,
             <Text variant='special' content={rowData.salary + ' PLN'}/>,
+            <div className='Center'>
+                <Button icon={<DeleteForever fontSize='small'/>} text='Usuń' onClick={()=>deleteMethod(rowData.username)}/>
+            </div>
         ]
     }
+    const modal2Inputs = [<Input background='white' placeholder='Nazwa użytkownika' icon={<People/>} inputState={addTeamEmployer.username} setInputState={(username)=>dispatch(setTeamEmployerUsername(username))}/>]
+    const modal2OnClick = () => {
+        addEmployerToTeam(addTeamEmployer, addTeamEmployer.teamId, addTeamEmployer.teamId, addTeamEmployer.username, teamEmployers, (employers)=>dispatch(setTeamEmployers(employers)))
+        //getTeamEmployers(addTeamEmployer.teamId, teamEmployers, (employers)=>dispatch(setTeamEmployers(employers)))
+    }
     return(
-        <List labels={labels} sizing={sizing} template={template} data={teamEmployers}/>
+        <>
+            <List labels={labels} sizing={sizing} template={template} data={teamEmployers}/>
+            <Modal title='Dodaj Użytkownika' inputs={modal2Inputs} onClick={modal2OnClick} onCleaning={()=>dispatch(setTeamEmployerUsername(''))} validate={addTeamEmployer.validation} setValidate={(validation)=>dispatch(setTeamEmployerValidation(validation))} id='modal2'/>
+            <div className='Right'>
+                <Button icon={<Add fontSize='small'/>} text='Dodaj' onClick={() => openDialog('modal2')}/>
+            </div>
+        </>
     )
 }

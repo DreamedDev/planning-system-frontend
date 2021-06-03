@@ -2,9 +2,9 @@ import styles from './Body.module.css'
 import {Route} from 'react-router-dom'
 import Employers from "../../pages/AdminPages/Employers";
 import Teams from "../../pages/AdminPages/Teams/Teams";
-import Tasks from "../../pages/AdminPages/Tasks";
-import Tools from "../../pages/AdminPages/Tools";
-import Materials from "../../pages/AdminPages/Materials";
+import Tasks from "../../pages/AdminPages/Tasks/Tasks";
+import Tools from "../../pages/AdminPages/Tools/Tools";
+import Materials from "../../pages/AdminPages/Materials/Materials";
 import Reports from "../../pages/AdminPages/Reports";
 import Products from "../../pages/AdminPages/Products";
 import Finance from "../../pages/AdminPages/Finance";
@@ -20,9 +20,12 @@ const Body = () => {
     const [employersDataArchival, setEmployersDataArchival] = useState([])
 
     const [teamsData, setTeamsData] = useState([])
+    const [toolsData, setToolsData] = useState([])
+    const [materialsData, setMaterialsData] = useState([])
+    const [tasksData, setTasksData] = useState([])
 
     const getInitData = () => {
-        const getInitDataAcync = async () => {
+        const getInitDataAsync = async () => {
             try {
                 const initEmployersDataActive = await getEmployers(sessionStorage.getItem("JWT"), true)
                 setEmployersDataActive(initEmployersDataActive)
@@ -31,11 +34,17 @@ const Body = () => {
 
                 const initTeamsData = await get('http://localhost:8080/api/teams', sessionStorage.getItem("JWT"))
                 setTeamsData(initTeamsData)
+                const initToolsData = await get('http://localhost:8080/api/tools', sessionStorage.getItem("JWT"))
+                setToolsData(initToolsData)
+                const initMaterialsData = await get('http://localhost:8080/api/materials', sessionStorage.getItem("JWT"))
+                setMaterialsData(initMaterialsData)
+                const initTasksData = await get('http://localhost:8080/api/tasks', sessionStorage.getItem("JWT"))
+                setTasksData(initTasksData)
             }catch (exception){
 
             }
         }
-        getInitDataAcync()
+        getInitDataAsync()
     }
 
     useEffect(()=>{
@@ -49,9 +58,9 @@ const Body = () => {
             <Route path='/admin/employers/archival' render={()=>(<Employers data={employersDataArchival} setData={setEmployersDataArchival} reversedData={employersDataActive} setReversedData={setEmployersDataActive}/>)} />
             {/*<Route path='/admin/teams' exact render={()=>(<Redirect to='/admin/teams/0'/>)}/>*/}
             <Route path='/admin/teams' render={()=>(<Teams data={teamsData} setData={setTeamsData}/>)}/>
-            <Route path='/admin/tasks' component={Tasks}/>
-            <Route path='/admin/tools' component={Tools}/>
-            <Route path='/admin/materials' component={Materials}/>
+            <Route path='/admin/tasks' render={()=><Tasks data={tasksData} setData={setTasksData}/>}/>
+            <Route path='/admin/tools' render={()=><Tools data={toolsData} setData={setToolsData}/>}/>
+            <Route path='/admin/materials' render={()=><Materials data={materialsData} setData={setMaterialsData}/> }/>
             <Route path='/admin/reports' component={Reports}/>
             <Route path='/admin/products' component={Products}/>
             <Route path='/admin/finance' component={Finance}/>

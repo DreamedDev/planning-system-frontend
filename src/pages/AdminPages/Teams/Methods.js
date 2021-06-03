@@ -1,6 +1,6 @@
 import Input from "../../../components/Input/Input";
 import {LocationCity, People, Person} from "@material-ui/icons";
-import {get, post, put} from "../../../api/RestApi";
+import {del, get, post, put} from "../../../api/RestApi";
 
 export const getTeamModalInputs = (addTeam, setName, setCity, setUsername) => {
     return [
@@ -10,7 +10,7 @@ export const getTeamModalInputs = (addTeam, setName, setCity, setUsername) => {
     ]
 }
 
-export const addTeam = (addTeam, data, setData) => {
+export const saveTeam = (addTeam, data, setData) => {
     const postMethod = async () => {
         try {
             const dto = {
@@ -42,17 +42,48 @@ export const getTeamEmployers = (id, state, setState) => {
     console.log(state)
 }
 
-export const addEmployerToTeam = (teamId, employerId) => {
-    const putMethod = async () => {
-        try{
-            const dto = {
-                id: employerId,
-                team: {
-                    id: teamId
-                }
-            }
-            await put('http://localhost:8080/employers', dto, sessionStorage.getItem("JWT"))
+export const getEmployerByUsername = (username, setEmployerId) => {
+    const getMethod = async () => {
+        try {
+            console.log("T1")
+            const employer = await get('http://localhost:8080/api/employers/'+username, sessionStorage.getItem("JWT"))
+            console.log("T2")
+            console.log(employer)
+            setEmployerId(employer.id)
         } catch (exception){}
     }
-    putMethod()
+    getMethod()
+}
+
+export const addEmployerToTeam = (addTeamEmployer, teamId, setTeamId, username, state, setState) => {
+    const putMethod = async () => {
+        try{
+            const employer = await get('http://localhost:8080/api/employers/'+username, sessionStorage.getItem("JWT"))
+            const dto = {
+                id: employer.id,
+                team: {
+                    id: setTeamId !== null ? setTeamId : -1
+                }
+            }
+            await put('http://localhost:8080/api/employers', dto, sessionStorage.getItem("JWT"))
+            const employers = await get('http://localhost:8080/api/employers?teamId='+teamId, sessionStorage.getItem("JWT"))
+            setState(employers)
+        } catch (exception){}
+    }
+    if(setTeamId != null && addTeamEmployer.validation === false)
+        alert("Wszystkie pola są obowiązkowe")
+    else
+        putMethod()
+}
+
+export const deleteEmployer = (id, data, setData) => {
+    const deleteEmployerAsync = async () => {
+        try {
+            await del('http://localhost:8080/api/teams/'+id, sessionStorage.getItem('JWT'))
+            setData(data.filter((team) => team.id !== id))
+        }catch (exception){
+
+        }
+    }
+    deleteEmployerAsync()
 }
