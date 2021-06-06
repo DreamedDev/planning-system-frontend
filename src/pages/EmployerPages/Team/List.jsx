@@ -41,7 +41,8 @@ export const TeamsList = ({data, setData}) => {
     }
 
     useEffect(()=>{
-        getTeamEmployerList(0)
+        if(data.length > 0)
+            getTeamEmployerList(0)
     }, [data])
 
     const modalInputs = getTeamModalInputs(addTeam, (name)=>dispatch(setTeamName(name)), (city)=>dispatch(setTeamCity(city)), (username)=>dispatch(setTeamUsername(username)))

@@ -17,7 +17,6 @@ export const saveTask = (addTask, data, setData) => {
                 team: {
                     name: addTask.teamName
                 },
-                status: 0,
                 notExpired: true
             }
             const task = await post('http://localhost:8080/api/tasks', dto, sessionStorage.getItem("JWT"))

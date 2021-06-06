@@ -15,8 +15,7 @@ const postRegistrationData = async (register) => {
             password: register.password
         },
         company: {
-            name: register.companyName,
-            adminKey: register.adminKey
+            name: register.companyName
         }
     }
     console.log(RegistrationDto)

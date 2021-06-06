@@ -1,5 +1,6 @@
 .AuthPage{
     display: flex;
+    background: var(--primaryColorBackground);
 }
 
 .AuthorizationAdd{

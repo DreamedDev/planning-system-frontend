@@ -9,6 +9,7 @@ const Logout = () => {
         sessionStorage.removeItem("JWT");
         sessionStorage.removeItem("user");
         history.push('/auth/admin')
+        window.location.reload()
     })
 
     return(

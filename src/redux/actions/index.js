@@ -443,13 +443,6 @@ export const setRegisterRole = (role) => {
     }
 }
 
-export const setRegisterAdminKey = (adminKey) => {
-    return{
-        type: 'SET_REGISTER_ADMIN_KEY',
-        payload: adminKey
-    }
-}
-
 export const setRegisterPosition = (position) => {
     return{
         type: 'SET_REGISTER_POSITION',

@@ -8,7 +8,6 @@ import {useHistory} from "react-router-dom";
 import {postEmployer} from "../../api/EmployersApi";
 import {
     clearAllRegister,
-    setRegisterAdminKey,
     setRegisterAge,
     setRegisterCity,
     setRegisterCityCode,
@@ -48,7 +47,7 @@ const UserDetails = ({type}) => {
     const register = useSelector(state => state.register)
     const dispatch = useDispatch();
     return(
-        <>
+        <div className={styles.Inputs}>
             <Input placeholder="Imię" icon={<Person/>} inputState={register.name} setInputState={(name)=>dispatch(setRegisterName(name))}/>
             <Input placeholder="Nazwisko" icon={<Person/>} inputState={register.lastName} setInputState={(lastName)=>dispatch(setRegisterLastName(lastName))}/>
             <Input placeholder="Wiek" icon={<Person/>} inputState={register.age} setInputState={(age)=>dispatch(setRegisterAge(age))}/>
@@ -57,7 +56,7 @@ const UserDetails = ({type}) => {
                 <Button icon={<ArrowBack fontSize='small'/>} text='Krok 1' onClick={()=>dispatch(setRegisterStep(1))}/>
                 <Button icon={<ArrowForward fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
             </div>
-        </>
+        </div>
     )
 }
 
@@ -65,7 +64,7 @@ const UserContact = ({type}) => {
     const register = useSelector(state => state.register)
     const dispatch = useDispatch();
     return(
-        <>
+        <div className={styles.Inputs}>
             <Input placeholder="Ulica" icon={<Person/>} inputState={register.street} setInputState={(street)=>dispatch(setRegisterStreet(street))}/>
             <Input placeholder="Miejscowość" icon={<Person/>} inputState={register.city} setInputState={(city)=>dispatch(setRegisterCity(city))}/>
             <Input placeholder="Kod pocztowy" icon={<Person/>} inputState={register.cityCode} setInputState={(cityCode)=>dispatch(setRegisterCityCode(cityCode))}/>
@@ -74,7 +73,7 @@ const UserContact = ({type}) => {
                 <Button icon={<ArrowBack fontSize='small'/>} text='Krok 2' onClick={()=>dispatch(setRegisterStep(2))}/>
                 <Button icon={<ArrowForward fontSize='small'/>} text='Krok 4' onClick={()=>dispatch(setRegisterStep(4))}/>
             </div>
-        </>
+        </div>
     )
 }
 
@@ -82,16 +81,15 @@ const CompanyGenerator = ({type, summit}) => {
     const register = useSelector(state => state.register)
     const dispatch = useDispatch();
     return(
-        <>
+        <div className={styles.Inputs}>
             <Input placeholder="Nazwa firmy" icon={<Person/>} inputState={register.companyName} setInputState={(companyName)=>dispatch(setRegisterCompanyName(companyName))}/>
-            <Input placeholder="Klucz administracyjny" icon={<Person/>} inputState={register.adminKey} setInputState={(adminKey)=>dispatch(setRegisterAdminKey(adminKey))}/>
             <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={register.position} setInputState={(position)=>dispatch(setRegisterPosition(position))}/>
             <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={register.salary} setInputState={(salary)=>dispatch(setRegisterSalary(salary))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
                 <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
                 <Button icon={<LockOpen fontSize='small'/>} text='Zarejestruj' onClick={()=>{summit()}}/>
             </div>
-        </>
+        </div>
     )
 }
 
@@ -99,14 +97,14 @@ const CompanyAdder = ({type}) => {
     const register = useSelector(state => state.register)
     const dispatch = useDispatch();
     return(
-        <>
+        <div className={styles.Inputs}>
             <Input placeholder="Rola(Admin/User)" icon={<Person/>} inputState={register.role} setInputState={(role)=>dispatch(setRegisterRole(role))}/>
             <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={register.position} setInputState={(position)=>dispatch(setRegisterPosition(position))}/>
             <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={register.salary} setInputState={(salary)=>dispatch(setRegisterSalary(salary))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
                 <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
             </div>
-        </>
+        </div>
     )
 }
 
@@ -156,12 +154,12 @@ const RegistrationPanel = ({type='create'}) => {
         if(register.username === "" || register.password === "" ||
             register.name === "" || register.lastName === "" || register.age === "" || register.pessel === "" ||
             register.street === "" || register.city === "" || register.cityCode === "" || register.phone === "" ||
-            (type === 'create' && register.companyName === "") || (type === 'create' && register.adminKey === "") || (type !== 'create' && register.role === "") || register.position === "" || register.salary === ""){
+            (type === 'create' && register.companyName === "") || (type !== 'create' && register.role === "") || register.position === "" || register.salary === ""){
             dispatch(setRegisterValidation(false))
         } else {
             dispatch(setRegisterValidation(true))
         }
-    },[register.username, register.password, register.passwordRepeat, register.name, register.lastName, register.age, register.pessel, register.street, register.city, register.cityCode, register.phone, register.companyName, register.role, register.adminKey, register.position, register.salary, register.validation])
+    },[register.username, register.password, register.passwordRepeat, register.name, register.lastName, register.age, register.pessel, register.street, register.city, register.cityCode, register.phone, register.companyName, register.role, register.position, register.salary, register.validation])
 
     if(register.step===1)
         return (<UserBasics type={type}/>)
