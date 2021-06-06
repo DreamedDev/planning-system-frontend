@@ -1,18 +1,17 @@
 import styles from './Body.module.css'
 import {Route} from 'react-router-dom'
 import Employers from "../../pages/AdminPages/Employers";
-import Teams from "../../pages/AdminPages/Teams/Teams";
-import Tasks from "../../pages/AdminPages/Tasks/Tasks";
+import Team from "../../pages/EmployerPages/Team/Team";
+import Task from "../../pages/EmployerPages/Task/Task";
 import Tools from "../../pages/AdminPages/Tools/Tools";
 import Materials from "../../pages/AdminPages/Materials/Materials";
-import Reports from "../../pages/AdminPages/Reports";
-import Products from "../../pages/AdminPages/Products";
-import Finance from "../../pages/AdminPages/Finance";
-import Analytics from "../../pages/AdminPages/Analytics";
 import {useEffect, useState} from "react";
 import {getEmployers} from "../../api/EmployersApi";
 import Redirect from "../Redirect/Redirect";
 import {get} from "../../api/RestApi";
+import Logout from "../Logout/Logout";
+import Teams from "../../pages/AdminPages/Teams/Teams";
+import Tasks from "../../pages/AdminPages/Tasks/Tasks";
 
 const Body = () => {
 
@@ -23,6 +22,9 @@ const Body = () => {
     const [toolsData, setToolsData] = useState([])
     const [materialsData, setMaterialsData] = useState([])
     const [tasksData, setTasksData] = useState([])
+
+    const [teamData, setTeamData] = useState([])
+    const [taskData, setTaskData] = useState([])
 
     const getInitData = () => {
         const getInitDataAsync = async () => {
@@ -40,6 +42,11 @@ const Body = () => {
                 setMaterialsData(initMaterialsData)
                 const initTasksData = await get('http://localhost:8080/api/tasks', sessionStorage.getItem("JWT"))
                 setTasksData(initTasksData)
+
+                const initTeamData = await get('http://localhost:8080/api/teams/me', sessionStorage.getItem("JWT"))
+                setTeamData(initTeamData)
+                const initTaskData = await get('http://localhost:8080/api/tasks/me', sessionStorage.getItem("JWT"))
+                setTaskData(initTaskData)
             }catch (exception){
 
             }
@@ -56,15 +63,15 @@ const Body = () => {
             <Route path='/admin/employers' exact render={()=>(<Redirect to='/admin/employers/active'/>)}/>
             <Route path='/admin/employers/active' render={()=>(<Employers data={employersDataActive} setData={setEmployersDataActive} reversedData={employersDataArchival} setReversedData={setEmployersDataArchival}/>)} />
             <Route path='/admin/employers/archival' render={()=>(<Employers data={employersDataArchival} setData={setEmployersDataArchival} reversedData={employersDataActive} setReversedData={setEmployersDataActive}/>)} />
-            {/*<Route path='/admin/teams' exact render={()=>(<Redirect to='/admin/teams/0'/>)}/>*/}
             <Route path='/admin/teams' render={()=>(<Teams data={teamsData} setData={setTeamsData}/>)}/>
             <Route path='/admin/tasks' render={()=><Tasks data={tasksData} setData={setTasksData}/>}/>
             <Route path='/admin/tools' render={()=><Tools data={toolsData} setData={setToolsData}/>}/>
             <Route path='/admin/materials' render={()=><Materials data={materialsData} setData={setMaterialsData}/> }/>
-            <Route path='/admin/reports' component={Reports}/>
-            <Route path='/admin/products' component={Products}/>
-            <Route path='/admin/finance' component={Finance}/>
-            <Route path='/admin/analytics' component={Analytics}/>
+            <Route path='/admin/logout' component={Logout}/>
+
+            <Route path='/employer/teams' render={()=>(<Team data={teamData} setData={setTeamData}/>)}/>
+            <Route path='/employer/tasks' render={()=><Task data={taskData} setData={setTaskData}/>}/>
+            <Route path='/employer/logout' component={Logout}/>
         </div>
     )
 }

@@ -321,7 +321,7 @@ const reducers = combineReducers({
     taskTools: taskToolsReducer,
     addTaskTool: addTaskToolReducer,
     taskMaterials: taskMaterialsReducer,
-    addTaskMaterial: addTaskMaterialReducer
+    addTaskMaterial: addTaskMaterialReducer,
 })
 
 export default reducers

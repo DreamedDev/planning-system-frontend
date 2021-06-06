@@ -1,11 +1,12 @@
-import Menu from "../Menu/Menu";
+import AdminMenu from "../Menu/AdminMenu";
 import Body from "../Body/Body";
 import Head from "../Head/Head";
 import {useEffect, useState} from "react";
 import { useHistory } from 'react-router-dom';
+import {useSelector} from "react-redux";
+import EmployerMenu from "../Menu/EmployerMenu";
 
-const Admin = () => {
-
+const Panel = () => {
     const history = useHistory();
 
     useEffect(()=>{
@@ -20,11 +21,11 @@ const Admin = () => {
         <>
             <div className='FixTop'>
                 <Head/>
-                <Menu/>
+                {sessionStorage.getItem("user") === "Admin" ? <AdminMenu/> : <EmployerMenu/>}
             </div>
             <Body/>
         </>
     )
 }
 
-export default Admin
+export default Panel

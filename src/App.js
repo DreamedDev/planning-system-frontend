@@ -2,14 +2,15 @@ import './App.css';
 import Head from "./components/Head/Head";
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import AuthPage from "./components/Auth/AuthPage";
-import Admin from "./components/Admin/Admin";
+import Panel from "./components/Panel/Panel";
 
 function App() {
   return (
     <div className='App'>
         <Router>
             <Route path='/auth' component={AuthPage}/>
-            <Route path='/admin' component={Admin}/>
+            <Route path='/admin' component={Panel}/>
+            <Route path='/employer' component={Panel}/>
         </Router>
     </div>
   );

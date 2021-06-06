@@ -5,9 +5,10 @@ import {Person, Security, LockOpen} from "@material-ui/icons";
 import Button from "../../components/Button/Button";
 import {NavLink, useHistory} from "react-router-dom";
 import {postLoginData} from "../../api/AuthApi";
+import {useDispatch, useSelector} from "react-redux";
+import {setUserType} from "../../redux/actions";
 
 const AdminAuth = () => {
-
     const history = useHistory();
 
     const [username, setUsername] = useState("")
@@ -19,6 +20,7 @@ const AdminAuth = () => {
             try {
                 const authTokenDto = await postLoginData(username, password)
                 sessionStorage.setItem("JWT", authTokenDto.bearer)
+                sessionStorage.setItem("user", "Admin");
                 history.push("/admin/employers");
             }catch (exception){
 
