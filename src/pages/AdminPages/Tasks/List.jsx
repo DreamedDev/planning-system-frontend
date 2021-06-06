@@ -39,15 +39,15 @@ export const TaskList = ({data, setData}) => {
     const addTaskTool = useSelector(state => state.addTaskTool)
     const dispatch = useDispatch();
 
-    const labels = ['', 'Nazwa', 'Team/Brygadzista', 'Status', '']
-    const sizing = '0.2fr 1.2fr 1.2fr 0.6fr 120px'
+    const labels = ['', 'Nazwa', 'Team/Brygadzista', '']
+    const sizing = '0.2fr 1.2fr 1.2fr 120px'
     const deleteMethod = (id) => deleteTask(id, data, setData)
     const template = (nr, rowData) => {
         return [
             <Text content={nr} variant='bold'/>,
             <Text content={rowData.name}/>,
             <DoubleLineText firstLine={rowData.team.name} secondLine={rowData.team.leader.name + ' ' + rowData.team.leader.lastName}/>,
-            <Text content={rowData.status}/>,
+            // <Text content={rowData.status}/>,
             <div className='Center'>
                 <Button icon={<DeleteForever fontSize='small'/>} text='Usuń' onClick={()=>deleteMethod(rowData.id)}/>
             </div>

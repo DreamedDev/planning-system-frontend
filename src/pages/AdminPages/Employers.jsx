@@ -12,8 +12,13 @@ import RegistrationPanel from "../AuthPages/RegistrationPanel";
 import {postRegistrationData} from "../../api/AuthApi";
 import Submenu from "../../components/Submenu/Submenu";
 import { useLocation } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {clearAllRegister, setRegisterValidation} from "../../redux/actions";
 
 const Employers = ({data, setData, reversedData, setReversedData}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
+
     const location = useLocation();
 
     const labels = ['Nr', 'Imię i Nazwisko', 'Wiek/Pesel', 'Adres', 'Kontakt', 'Stanowisko', 'Wynagrodzenie', 'Usuń']
@@ -53,12 +58,9 @@ const Employers = ({data, setData, reversedData, setReversedData}) => {
         const modal = document.getElementById('modal')
         modal.classList.add(modalStyles.ModalVisible)
     }
-    const initExpression = () => {}
-    const [registrationPanelCleaning, setRegistrationPanelCleaning] = useState(()=>initExpression)
-    const [summit, setSummit] = useState(()=>initExpression)
-    const [validation, setValidation] = useState(false)
+
     const modalInputs = [
-        <RegistrationPanel type='add' setCleaningCallback={setRegistrationPanelCleaning} setSummitCallback={setSummit} validation={validation} setValidation={setValidation} employersData={data} setEmployersData={setData}/>
+        <RegistrationPanel type='add'/>
     ]
 
     const submenuOptions = [{
@@ -80,8 +82,8 @@ const Employers = ({data, setData, reversedData, setReversedData}) => {
                 }
             </div>
             {location.pathname === '/admin/employers/active' ?
-                <Modal title='Dodaj produkt' inputs={modalInputs} onClick={summit}
-                       onCleaning={registrationPanelCleaning} validate={validation} setValidate={setValidation}/> :
+                <Modal title='Dodaj produkt' inputs={modalInputs} onClick={()=>postEmployer(register, sessionStorage.getItem("JWT"))}
+                       onCleaning={()=>dispatch(clearAllRegister())} validate={register.validation} setValidate={(validation)=>dispatch(setRegisterValidation(validation))}/> :
                 <></>
             }
         </div>

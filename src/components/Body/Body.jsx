@@ -1,6 +1,5 @@
 import styles from './Body.module.css'
 import {Route} from 'react-router-dom'
-import Employers from "../../pages/AdminPages/Employers";
 import Team from "../../pages/EmployerPages/Team/Team";
 import Task from "../../pages/EmployerPages/Task/Task";
 import Tools from "../../pages/AdminPages/Tools/Tools";
@@ -12,6 +11,7 @@ import {get} from "../../api/RestApi";
 import Logout from "../Logout/Logout";
 import Teams from "../../pages/AdminPages/Teams/Teams";
 import Tasks from "../../pages/AdminPages/Tasks/Tasks";
+import Employers from "../../pages/AdminPages/Employers/Employers";
 
 const Body = () => {
 
@@ -60,9 +60,10 @@ const Body = () => {
 
     return(
         <div className={styles.Body}>
-            <Route path='/admin/employers' exact render={()=>(<Redirect to='/admin/employers/active'/>)}/>
+            {/*<Route path='/admin/employers' exact render={()=>(<Redirect to='/admin/employers/active'/>)}/>
             <Route path='/admin/employers/active' render={()=>(<Employers data={employersDataActive} setData={setEmployersDataActive} reversedData={employersDataArchival} setReversedData={setEmployersDataArchival}/>)} />
-            <Route path='/admin/employers/archival' render={()=>(<Employers data={employersDataArchival} setData={setEmployersDataArchival} reversedData={employersDataActive} setReversedData={setEmployersDataActive}/>)} />
+            <Route path='/admin/employers/archival' render={()=>(<Employers data={employersDataArchival} setData={setEmployersDataArchival} reversedData={employersDataActive} setReversedData={setEmployersDataActive}/>)} />*/}
+            <Route path='/admin/employers' render={()=>(<Employers data={employersDataActive} setData={setEmployersDataActive}/>)}/>
             <Route path='/admin/teams' render={()=>(<Teams data={teamsData} setData={setTeamsData}/>)}/>
             <Route path='/admin/tasks' render={()=><Tasks data={tasksData} setData={setTasksData}/>}/>
             <Route path='/admin/tools' render={()=><Tools data={toolsData} setData={setToolsData}/>}/>

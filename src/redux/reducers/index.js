@@ -17,131 +17,145 @@ const addTeamReducer = (state = {name: '', city: '', username: '', validation: f
     }
 }
 
-const addEmployerReducer = (state = {
-    username: '', password: '', passwordRepeat: '',
+const registerReducer = (state = {
+    step: 1, username: '', password: '', passwordRepeat: '',
     name: '', lastName: '', age: '', pessel: '',
     street: '', city: '', cityCode: '', phone: '',
-    companyName: '', role: '', adminKey: '', position: '', salary: ''
+    companyName: '', role: '', adminKey: '', position: '', salary: '', validation: false
 }, action) => {
     switch (action.type){
-        case 'SET_EMPLOYER_USERNAME':
+        case 'SET_REGISTER_STEP':
             return {
-                username: action.payload, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: action.payload, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_PASSWORD':
+        case 'SET_REGISTER_USERNAME':
             return {
-                username: state.username, password: action.payload, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: action.payload, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_PASSWORD_REPEAT':
+        case 'SET_REGISTER_PASSWORD':
             return {
-                username: state.username, password: state.password, passwordRepeat: action.payload,
+                step: state.step, username: state.username, password: action.payload, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_NAME':
+        case 'SET_REGISTER_PASSWORD_REPEAT':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: action.payload,
+                name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
+                street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
+            }
+        case 'SET_REGISTER_NAME':
+            return {
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: action.payload, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_LAST_NAME':
+        case 'SET_REGISTER_LAST_NAME':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: action.payload, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_AGE':
+        case 'SET_REGISTER_AGE':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: action.payload, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_PESSEL':
+        case 'SET_REGISTER_PESSEL':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: action.payload,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_STREET':
+        case 'SET_REGISTER_STREET':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: action.payload, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_CITY':
+        case 'SET_REGISTER_CITY':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: action.payload, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_CITY_CODE':
+        case 'SET_REGISTER_CITY_CODE':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: action.payload, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_PHONE':
+        case 'SET_REGISTER_PHONE':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: action.payload,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_COMPANY_NAME':
+        case 'SET_REGISTER_COMPANY_NAME':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: action.payload, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: action.payload, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_ROLE':
+        case 'SET_REGISTER_ROLE':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: action.payload, adminKey: state.adminKey, position: state.position, salary: state.salary
+                companyName: state.companyName, role: action.payload, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_ADMIN_KEY':
+        case 'SET_REGISTER_ADMIN_KEY':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: action.payload, position: state.position, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: action.payload, position: state.position, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_POSITION':
+        case 'SET_REGISTER_POSITION':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: action.payload, salary: state.salary
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: action.payload, salary: state.salary, validation: state.validation
             }
-        case 'SET_EMPLOYER_SALARY':
+        case 'SET_REGISTER_SALARY':
             return {
-                username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
                 name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
                 street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
-                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: action.payload
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: action.payload, validation: state.validation
             }
-        case 'CLEAR_ALL_EMPLOYER':
+        case 'SET_REGISTER_VALIDATION':
             return {
-                username: '', password: '', passwordRepeat: '',
+                step: state.step, username: state.username, password: state.password, passwordRepeat: state.passwordRepeat,
+                name: state.name, lastName: state.lastName, age: state.age, pessel: state.pessel,
+                street: state.street, city: state.city, cityCode: state.cityCode, phone: state.phone,
+                companyName: state.companyName, role: state.role, adminKey: state.adminKey, position: state.position, salary: state.salary, validation: action.payload
+            }
+        case 'CLEAR_ALL_REGISTER':
+            return {
+                step: 1, username: '', password: '', passwordRepeat: '',
                 name: '', lastName: '', age: '', pessel: '',
                 street: '', city: '', cityCode: '', phone: '',
-                companyName: '', role: '', adminKey: '', position: '', salary: ''
+                companyName: '', role: '', adminKey: '', position: '', salary: '', validation: false
             }
         default:
             return state
@@ -229,31 +243,6 @@ const addTaskReducer = (state={name: '', teamName: '', validation: false}, actio
     }
 }
 
-/*const addTaskReducer = (state={nr: -1, taskId: -1, teamId: -1, username: '', name: '', status: '', description: '', validation: false}, action) => {
-    switch (action.type){
-        case 'SET_TASK_NR':
-            return {nr: action.payload, taskId: state.taskId, teamId: state.teamId, username: state.username, name: state.name, status: state.status, description: state.description, validation: state.validation}
-        case 'SET_TASK_ID':
-            return {nr: state.nr, taskId: action.payload, teamId: state.teamId, username: state.username, name: state.name, status: state.status, description: state.description, validation: state.validation}
-        case 'SET_TASK_TEAM_ID':
-            return {nr: state.nr, taskId: state.taskId, teamId: action.payload, username: state.username, name: state.name, status: state.status, description: state.description, validation: state.validation}
-        case 'SET_TASK_USERNAME':
-            return {nr: state.nr, taskId: state.taskId, teamId: state.teamId, username: action.payload, name: state.name, status: state.status, description: state.description, validation: state.validation}
-        case 'SET_TASK_NAME':
-            return {nr: state.nr, taskId: state.taskId, teamId: state.teamId, username: state.username, name: action.payload, status: state.status, description: state.description, validation: state.validation}
-        case 'SET_TASK_STATUS':
-            return {nr: state.nr, taskId: state.taskId, teamId: state.teamId, username: state.username, name: state.name, status: action.payload, description: state.description, validation: state.validation}
-        case 'SET_TASK_DESCRIPTION':
-            return {nr: state.nr, taskId: state.taskId, teamId: state.teamId, username: state.username, name: state.name, status: state.status, description: action.payload, validation: state.validation}
-        case 'SET_TASK_VALIDATION':
-            return {nr: state.nr, taskId: state.taskId, teamId: state.teamId, username: state.username, name: state.name, status: state.status, description: state.description, validation: action.payload}
-        case 'CLEAR_ALL_TASK':
-            return {nr: -1, taskId: -1, teamId: -1, username: '', name: '', status: '', description: '', validation: false}
-        default:
-            return state
-    }
-}*/
-
 const taskToolsReducer = (state=[], action) => {
     switch (action.type){
         case 'SET_TASK_TOOLS':
@@ -310,9 +299,18 @@ const addTaskMaterialReducer = (state={nr: -1, taskId: -1, materialId: -1, mater
     }
 }
 
+/*const register = (state={
+    registrationStep: 1, username: '', password: '', passwordRepeat: '',
+    name: '', lastName: '', age: '', pessel: '',
+    street: '', city: '', cityCode: '', phone: '',
+    companyName: '', role: '', adminKey: '', position: '', salary: '', validation: false
+}, action) => {
+
+}*/
+
 const reducers = combineReducers({
     addTeam: addTeamReducer,
-    addEmployer: addEmployerReducer,
+    register: registerReducer,
     teamEmployers: teamEmployersReducer,
     addTeamEmployer: addTeamEmployerReducer,
     addTool: addToolReducer,

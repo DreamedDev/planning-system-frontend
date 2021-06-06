@@ -6,142 +6,133 @@ import {useEffect, useState} from "react";
 import {postRegistrationData} from "../../api/AuthApi";
 import {useHistory} from "react-router-dom";
 import {postEmployer} from "../../api/EmployersApi";
+import {
+    clearAllRegister,
+    setRegisterAdminKey,
+    setRegisterAge,
+    setRegisterCity,
+    setRegisterCityCode,
+    setRegisterCompanyName,
+    setRegisterLastName,
+    setRegisterName,
+    setRegisterPassword,
+    setRegisterPasswordRepeat,
+    setRegisterPessel,
+    setRegisterPhone,
+    setRegisterPosition,
+    setRegisterRole,
+    setRegisterSalary,
+    setRegisterStep,
+    setRegisterStreet,
+    setRegisterUsername,
+    setRegisterValidation
+} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
 
-const UserBasics = ({username, setUsername, password, setPassword, passwordRepeat, setPasswordRepeat, setRegistrationStep, type}) => {
+const UserBasics = ({type}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
+    return(
+        <div className={styles.Inputs}>
+            <Input placeholder="Nazwa użytkownika" icon={<Person/>} inputState={register.username} setInputState={(username)=>dispatch(setRegisterUsername(username))}/>
+            <Input type="password" placeholder="Hasło" icon={<Security/>} inputState={register.password} setInputState={(password)=>dispatch(setRegisterPassword(password))}/>
+            <Input type="password" placeholder="Powtórz hasło" icon={<Security/>} inputState={register.passwordRepeat} setInputState={(passwordRepeat)=>dispatch(setRegisterPasswordRepeat(passwordRepeat))}/>
+            <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
+                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 2' onClick={()=>{register.password===register.passwordRepeat ? dispatch(setRegisterStep(2)) : alert('Nieprawidłowo powtórzone hadło')}}/>
+            </div>
+        </div>
+    )
+}
+
+const UserDetails = ({type}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
     return(
         <>
-            <Input placeholder="Nazwa użytkownika" icon={<Person/>} inputState={username} setInputState={setUsername}/>
-            <Input type="password" placeholder="Hasło" icon={<Security/>} inputState={password} setInputState={setPassword}/>
-            <Input type="password" placeholder="Powtórz hasło" icon={<Security/>} inputState={passwordRepeat} setInputState={setPasswordRepeat}/>
+            <Input placeholder="Imię" icon={<Person/>} inputState={register.name} setInputState={(name)=>dispatch(setRegisterName(name))}/>
+            <Input placeholder="Nazwisko" icon={<Person/>} inputState={register.lastName} setInputState={(lastName)=>dispatch(setRegisterLastName(lastName))}/>
+            <Input placeholder="Wiek" icon={<Person/>} inputState={register.age} setInputState={(age)=>dispatch(setRegisterAge(age))}/>
+            <Input placeholder="Pesel" icon={<Person/>} inputState={register.pessel} setInputState={(pessel)=>dispatch(setRegisterPessel(pessel))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
-                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 2' onClick={()=>{password===passwordRepeat ? setRegistrationStep(2) : alert('Nieprawidłowo powtórzone hadło')}}/>
+                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 1' onClick={()=>dispatch(setRegisterStep(1))}/>
+                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
             </div>
         </>
     )
 }
 
-const UserDetails = ({name, setName, lastName, setLastName, age, setAge, pessel, setPessel, setRegistrationStep, type}) => {
+const UserContact = ({type}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
     return(
         <>
-            <Input placeholder="Imię" icon={<Person/>} inputState={name} setInputState={setName}/>
-            <Input placeholder="Nazwisko" icon={<Person/>} inputState={lastName} setInputState={setLastName}/>
-            <Input placeholder="Wiek" icon={<Person/>} inputState={age} setInputState={setAge}/>
-            <Input placeholder="Pesel" icon={<Person/>} inputState={pessel} setInputState={setPessel}/>
+            <Input placeholder="Ulica" icon={<Person/>} inputState={register.street} setInputState={(street)=>dispatch(setRegisterStreet(street))}/>
+            <Input placeholder="Miejscowość" icon={<Person/>} inputState={register.city} setInputState={(city)=>dispatch(setRegisterCity(city))}/>
+            <Input placeholder="Kod pocztowy" icon={<Person/>} inputState={register.cityCode} setInputState={(cityCode)=>dispatch(setRegisterCityCode(cityCode))}/>
+            <Input placeholder="Telefon" icon={<Person/>} inputState={register.phone} setInputState={(phone)=>dispatch(setRegisterPhone(phone))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
-                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 1' onClick={()=>{setRegistrationStep(1)}}/>
-                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 3' onClick={()=>{setRegistrationStep(3)}}/>
+                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 2' onClick={()=>dispatch(setRegisterStep(2))}/>
+                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 4' onClick={()=>dispatch(setRegisterStep(4))}/>
             </div>
         </>
     )
 }
 
-const UserContact = ({street, setStreet, city, setCity, cityCode, setCityCode, phone, setPhone, setRegistrationStep, type}) => {
+const CompanyGenerator = ({type, summit}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
     return(
         <>
-            <Input placeholder="Ulica" icon={<Person/>} inputState={street} setInputState={setStreet}/>
-            <Input placeholder="Miejscowość" icon={<Person/>} inputState={city} setInputState={setCity}/>
-            <Input placeholder="Kod pocztowy" icon={<Person/>} inputState={cityCode} setInputState={setCityCode}/>
-            <Input placeholder="Telefon" icon={<Person/>} inputState={phone} setInputState={setPhone}/>
+            <Input placeholder="Nazwa firmy" icon={<Person/>} inputState={register.companyName} setInputState={(companyName)=>dispatch(setRegisterCompanyName(companyName))}/>
+            <Input placeholder="Klucz administracyjny" icon={<Person/>} inputState={register.adminKey} setInputState={(adminKey)=>dispatch(setRegisterAdminKey(adminKey))}/>
+            <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={register.position} setInputState={(position)=>dispatch(setRegisterPosition(position))}/>
+            <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={register.salary} setInputState={(salary)=>dispatch(setRegisterSalary(salary))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
-                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 2' onClick={()=>{setRegistrationStep(2)}}/>
-                <Button icon={<ArrowForward fontSize='small'/>} text='Krok 4' onClick={()=>{setRegistrationStep(4)}}/>
-            </div>
-        </>
-    )
-}
-
-const CompanyGenerator = ({companyName, setCompanyName, adminKey, setAdminKey, position, setPosition, salary, setSalary, setRegistrationStep, summit, type}) => {
-    return(
-        <>
-            <Input placeholder="Nazwa firmy" icon={<Person/>} inputState={companyName} setInputState={setCompanyName}/>
-            <Input placeholder="Klucz administracyjny" icon={<Person/>} inputState={adminKey} setInputState={setAdminKey}/>
-            <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={position} setInputState={setPosition}/>
-            <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={salary} setInputState={setSalary}/>
-            <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
-                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>{setRegistrationStep(3)}}/>
+                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
                 <Button icon={<LockOpen fontSize='small'/>} text='Zarejestruj' onClick={()=>{summit()}}/>
             </div>
         </>
     )
 }
 
-const CompanyAdder = ({role, setRole, position, setPosition, salary, setSalary, setRegistrationStep, summit, type}) => {
+const CompanyAdder = ({type}) => {
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
     return(
         <>
-            <Input placeholder="Rola(Admin/User)" icon={<Person/>} inputState={role} setInputState={setRole}/>
-            <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={position} setInputState={setPosition}/>
-            <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={salary} setInputState={setSalary}/>
+            <Input placeholder="Rola(Admin/User)" icon={<Person/>} inputState={register.role} setInputState={(role)=>dispatch(setRegisterRole(role))}/>
+            <Input placeholder="Pozycja(prezes, kierownik, etc.)" icon={<Person/>} inputState={register.position} setInputState={(position)=>dispatch(setRegisterPosition(position))}/>
+            <Input placeholder="Wynagrodzenie" icon={<Person/>} inputState={register.salary} setInputState={(salary)=>dispatch(setRegisterSalary(salary))}/>
             <div className={type === 'create' ? styles.SubmitCreate : styles.SubmitAdd}>
-                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>{setRegistrationStep(3)}}/>
+                <Button icon={<ArrowBack fontSize='small'/>} text='Krok 3' onClick={()=>dispatch(setRegisterStep(3))}/>
             </div>
         </>
     )
 }
 
-const RegistrationPanel = ({type='create', setCleaningCallback=()=>{}, setSummitCallback=()=>{}, validation, setValidation, employersData, setEmployersData}) => {
+const RegistrationPanel = ({type='create'}) => {
 
-    const [registrationStep, setRegistrationStep] = useState(1);
-
+    const register = useSelector(state => state.register)
+    const dispatch = useDispatch();
     const history = useHistory();
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordRepeat, setPasswordRepeat] = useState("")
-
-    const [name, setName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [age, setAge] = useState("")
-    const [pessel, setPessel] = useState("")
-
-    const [street, setStreet] = useState("")
-    const [city, setCity] = useState("")
-    const [cityCode, setCityCode] = useState("")
-    const [phone, setPhone] = useState("")
-
-    const [companyName, setCompanyName] = useState("")
-    const [role, setRole] = useState("")
-    const [adminKey, setAdminKey] = useState("")
-    const [position, setPosition] = useState("")
-    const [salary, setSalary] = useState("")
-
     const cleaning = () => {
-        setRegistrationStep(1)
-
-        setUsername("")
-        setPassword("")
-        setPasswordRepeat("")
-
-        setName("")
-        setLastName("")
-        setAge("")
-        setPessel("")
-
-        setStreet("")
-        setCity("")
-        setCityCode("")
-        setPhone("")
-
-        setCompanyName("")
-        setRole("")
-        setAdminKey("")
-        setPosition("")
-        setSalary("")
+        clearAllRegister()
     }
 
     const registration = () => {
-        const register = async () => {
+        const registrationAsync = async () => {
             try {
-                if(password === passwordRepeat){
+                if(register.password === register.passwordRepeat){
                     if(type==='create'){
-                        await postRegistrationData(registrationStep, username, name, lastName, age, pessel, street, cityCode, city, phone, position, salary, password, companyName, adminKey)
-                        alert("Firma "+companyName+" została zarejestrowania.")
+                        await postRegistrationData(register)
+                        alert("Firma "+register.companyName+" została zarejestrowania.")
                         history.push("/admin/employers");
+                        dispatch(clearAllRegister())
                     } else {
-                        const employer = await postEmployer(username, name, lastName, age, pessel, street, cityCode, city, phone, position, salary, password, role, sessionStorage.getItem("JWT"))
-                        // let employers = employersData
-                        // employers.push(employer)
-                        // setEmployersData(employers)
-                        setEmployersData([...employersData, employer])
+                        alert("Rejestracja...")
+                        const employer = await postEmployer(register.username, register.name, register.lastName, register.age, register.pessel, register.street, register.cityCode, register.city, register.phone, register.position, register.salary, register.password, register.role, sessionStorage.getItem("JWT"))
+                        //setEmployersData([...employersData, employer])
                         alert("Dodano nowego użytkownika.")
                     }
                 }
@@ -149,39 +140,39 @@ const RegistrationPanel = ({type='create', setCleaningCallback=()=>{}, setSummit
 
             }
         }
-        register()
+        registrationAsync()
     }
 
     const summit = () => {
-        if(validation === false)
+        if(register.validation === false)
             alert("Wszystkie pola są obowiązkowe")
         else
             registration()
     }
 
     useEffect(()=>{
-        setCleaningCallback(()=>cleaning)
-        setSummitCallback(()=>summit)
-        if(username === "" || password === "" ||
-            name === "" || lastName === "" || age === "" || pessel === "" ||
-            street === "" || city === "" || cityCode === "" || phone === "" ||
-            (type === 'create' && companyName === "") || (type === 'create' && adminKey === "") || (type !== 'create' && role === "") || position === "" || salary === ""){
-            setValidation(false)
+        //setCleaningCallback(()=>cleaning)
+        //setSummitCallback(()=>summit)
+        if(register.username === "" || register.password === "" ||
+            register.name === "" || register.lastName === "" || register.age === "" || register.pessel === "" ||
+            register.street === "" || register.city === "" || register.cityCode === "" || register.phone === "" ||
+            (type === 'create' && register.companyName === "") || (type === 'create' && register.adminKey === "") || (type !== 'create' && register.role === "") || register.position === "" || register.salary === ""){
+            dispatch(setRegisterValidation(false))
         } else {
-            setValidation(true)
+            dispatch(setRegisterValidation(true))
         }
-    },[username, password, passwordRepeat, name, lastName, age, pessel, street, city, cityCode, phone, companyName, role, adminKey, position, salary, validation])
+    },[register.username, register.password, register.passwordRepeat, register.name, register.lastName, register.age, register.pessel, register.street, register.city, register.cityCode, register.phone, register.companyName, register.role, register.adminKey, register.position, register.salary, register.validation])
 
-    if(registrationStep===1)
-        return (<UserBasics  username={username} setUsername={setUsername} password={password} setPassword={setPassword} passwordRepeat={passwordRepeat} setPasswordRepeat={setPasswordRepeat} setRegistrationStep={setRegistrationStep} type={type}/>)
-    else if(registrationStep===2)
-        return (<UserDetails name={name} setName={setName} lastName={lastName} setLastName={setLastName} age={age} setAge={setAge} pessel={pessel} setPessel={setPessel} setRegistrationStep={setRegistrationStep} type={type}/>)
-    else if(registrationStep===3)
-        return (<UserContact street={street} setStreet={setStreet} city={city} setCity={setCity} cityCode={cityCode} setCityCode={setCityCode} phone={phone} setPhone={setPhone} setRegistrationStep={setRegistrationStep} type={type}/>)
+    if(register.step===1)
+        return (<UserBasics type={type}/>)
+    else if(register.step===2)
+        return (<UserDetails type={type}/>)
+    else if(register.step===3)
+        return (<UserContact type={type}/>)
     else
         return type === 'create' ?
-            (<CompanyGenerator companyName={companyName} setCompanyName={setCompanyName} adminKey={adminKey} setAdminKey={setAdminKey} position={position} setPosition={setPosition} salary={salary} setSalary={setSalary} setRegistrationStep={setRegistrationStep} summit={summit} type={type}/>) :
-            (<CompanyAdder role={role} setRole={setRole} position={position} setPosition={setPosition} salary={salary} setSalary={setSalary} setRegistrationStep={setRegistrationStep} summit={summit} type={type}/>)
+            (<CompanyGenerator summit={summit} type={type}/>) :
+            (<CompanyAdder summit={summit} type={type}/>)
 }
 
 export default RegistrationPanel

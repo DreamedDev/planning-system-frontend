@@ -41,3 +41,10 @@
     display: flex;
     gap: 8px;
 }
+
+.Inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}

@@ -47,7 +47,7 @@ const Teams = ({data, setData}) => {
                         {/*<Route path={'/admin/teams/:teamId'} render={()=>(<TeamEmployersList/>)}/>*/}
                         <TeamEmployersList/>
                     </> :
-                    <p className={styles.Header}>Wybierz team, aby zarządzać jego członkami</p>
+                    <p className={styles.Header}></p>
                 }
             </div>
         </div>

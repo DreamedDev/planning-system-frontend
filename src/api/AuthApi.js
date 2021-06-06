@@ -1,24 +1,25 @@
-const postRegistrationData = async (username, name, lastName, age, pessel, street, cityCode, city, phone, position, salary, password, companyName, adminKey) => {
+const postRegistrationData = async (register) => {
     const RegistrationDto = {
         employer: {
-            username: username,
-            name: name,
-            lastName: lastName,
-            age: age,
-            pessel: pessel,
-            street: street,
-            cityCode: cityCode,
-            city: city,
-            phone: phone,
-            position: position,
-            salary: salary,
-            password:password
+            username: register.username,
+            name: register.name,
+            lastName: register.lastName,
+            age: register.age,
+            pessel: register.pessel,
+            street: register.street,
+            cityCode: register.cityCode,
+            city: register.city,
+            phone: register.phone,
+            position: register.position,
+            salary: register.salary,
+            password: register.password
         },
         company: {
-            name: companyName,
-            adminKey: adminKey
+            name: register.companyName,
+            adminKey: register.adminKey
         }
     }
+    console.log(RegistrationDto)
     return await fetch('http://localhost:8080/api/auth/signup/create', {
         method: 'POST',
         headers: {

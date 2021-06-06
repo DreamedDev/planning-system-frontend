@@ -5,6 +5,7 @@ import AdminAuth from "../../pages/AuthPages/AdminAuth";
 import Registration from "../../pages/AuthPages/Registration";
 import {Business} from "@material-ui/icons";
 import logo from "../../logo.svg"
+import Redirect from "../Redirect/Redirect";
 
 const AuthPage = () => {
     return(
@@ -18,6 +19,7 @@ const AuthPage = () => {
                 <h2>System IT dla planowania oraz kontroli pracy przedsiębiorstwa</h2>
             </div>
             <div>
+                <Route path='/auth' exact render={()=>(<Redirect to='/auth/admin'/>)}/>
                 <Route path='/auth/user' component={UserAuth}/>
                 <Route path='/auth/admin' component={AdminAuth}/>
                 <Route path='/auth/registration' component={Registration}/>

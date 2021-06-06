@@ -43,8 +43,8 @@ const UserAuth = () => {
                     Rejestracja
                 </NavLink>
             </div>
-            <Input placeholder="Nazwa użytkownika" icon={<Person/>} inputState={username} setInputState={setUsername}/>
-            <Input type="password" placeholder="Hasło" icon={<Security/>} inputState={password} setInputState={setPassword}/>
+            <Input background='#F7F9F9' placeholder="Nazwa użytkownika" icon={<Person/>} inputState={username} setInputState={setUsername}/>
+            <Input background='#F7F9F9' type="password" placeholder="Hasło" icon={<Security/>} inputState={password} setInputState={setPassword}/>
             <div className={styles.Submit}>
                 <Button icon={<LockOpen fontSize='small'/>} text='Zaloguj' onClick={()=>login()}/>
             </div>

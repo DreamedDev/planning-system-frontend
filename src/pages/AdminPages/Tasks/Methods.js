@@ -55,7 +55,9 @@ export const addToolToTask = (addToolTask, taskId, setToolId, name, state, setSt
             await put('http://localhost:8080/api/tools', dto, sessionStorage.getItem("JWT"))
             const tools = await get('http://localhost:8080/api/tools?taskId='+taskId, sessionStorage.getItem("JWT"))
             setState(tools)
-        } catch (exception){}
+        } catch (exception){
+            alert("Brak narzędzia o wskazanej nazwie")
+        }
     }
     if(setToolId != null && addToolTask.validation === false)
         alert("Wszystkie pola są obowiązkowe")
@@ -91,7 +93,9 @@ export const addMaterialToTask = (addMaterialTask, taskId, setMaterialId, name, 
             await put('http://localhost:8080/api/materials', dto, sessionStorage.getItem("JWT"))
             const materials = await get('http://localhost:8080/api/materials?taskId='+taskId, sessionStorage.getItem("JWT"))
             setState(materials)
-        } catch (exception){}
+        } catch (exception){
+            alert("Brak materiału o wskazanej nazwie")
+        }
     }
     if(setMaterialId != null && addMaterialTask.validation === false)
         alert("Wszystkie pola są obowiązkowe")

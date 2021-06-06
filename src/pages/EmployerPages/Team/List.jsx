@@ -39,6 +39,11 @@ export const TeamsList = ({data, setData}) => {
         getTeamEmployers(data[nr].id, teamEmployers, (employers)=>dispatch(setTeamEmployers(employers)))
         dispatch(setTeamEmployerTeamId(data[nr].id))
     }
+
+    useEffect(()=>{
+        getTeamEmployerList(0)
+    }, [data])
+
     const modalInputs = getTeamModalInputs(addTeam, (name)=>dispatch(setTeamName(name)), (city)=>dispatch(setTeamCity(city)), (username)=>dispatch(setTeamUsername(username)))
     const modalOnClick = () => saveTeam(addTeam, data, setData)
     return(

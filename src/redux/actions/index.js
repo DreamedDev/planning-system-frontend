@@ -344,3 +344,135 @@ export const clearAllTaskMaterial = () => {
         type: 'CLEAR_ALL_TASK_MATERIAL',
     }
 }
+
+export const setRegisterStep = (step) => {
+    return{
+        type: 'SET_REGISTER_STEP',
+        payload: step
+    }
+}
+
+export const setRegisterUsername = (username) => {
+    return{
+        type: 'SET_REGISTER_USERNAME',
+        payload: username
+    }
+}
+
+export const setRegisterPassword = (password) => {
+    return{
+        type: 'SET_REGISTER_PASSWORD',
+        payload: password
+    }
+}
+
+export const setRegisterPasswordRepeat = (passwordRepeat) => {
+    return{
+        type: 'SET_REGISTER_PASSWORD_REPEAT',
+        payload: passwordRepeat
+    }
+}
+
+export const setRegisterName = (name) => {
+    return{
+        type: 'SET_REGISTER_NAME',
+        payload: name
+    }
+}
+
+export const setRegisterLastName = (lastName) => {
+    return{
+        type: 'SET_REGISTER_LAST_NAME',
+        payload: lastName
+    }
+}
+
+export const setRegisterAge = (age) => {
+    return{
+        type: 'SET_REGISTER_AGE',
+        payload: age
+    }
+}
+
+export const setRegisterPessel = (pessel) => {
+    return{
+        type: 'SET_REGISTER_PESSEL',
+        payload: pessel
+    }
+}
+
+export const setRegisterStreet = (street) => {
+    return{
+        type: 'SET_REGISTER_STREET',
+        payload: street
+    }
+}
+
+export const setRegisterCity = (city) => {
+    return{
+        type: 'SET_REGISTER_CITY',
+        payload: city
+    }
+}
+
+export const setRegisterCityCode = (cityCode) => {
+    return{
+        type: 'SET_REGISTER_CITY_CODE',
+        payload: cityCode
+    }
+}
+
+export const setRegisterPhone = (phone) => {
+    return{
+        type: 'SET_REGISTER_PHONE',
+        payload: phone
+    }
+}
+
+export const setRegisterCompanyName = (companyName) => {
+    return{
+        type: 'SET_REGISTER_COMPANY_NAME',
+        payload: companyName
+    }
+}
+
+export const setRegisterRole = (role) => {
+    return{
+        type: 'SET_REGISTER_ROLE',
+        payload: role
+    }
+}
+
+export const setRegisterAdminKey = (adminKey) => {
+    return{
+        type: 'SET_REGISTER_ADMIN_KEY',
+        payload: adminKey
+    }
+}
+
+export const setRegisterPosition = (position) => {
+    return{
+        type: 'SET_REGISTER_POSITION',
+        payload: position
+    }
+}
+
+export const setRegisterSalary = (salary) => {
+    return{
+        type: 'SET_REGISTER_SALARY',
+        payload: salary
+    }
+}
+
+export const setRegisterValidation = (validation) => {
+    return{
+        type: 'SET_REGISTER_VALIDATION',
+        payload: validation
+    }
+}
+
+export const clearAllRegister = () => {
+    return{
+        type: 'CLEAR_ALL_REGISTER'
+    }
+}

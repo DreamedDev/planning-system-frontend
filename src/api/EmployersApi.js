@@ -16,6 +16,7 @@ const getEmployers = async (stringToken, notExpired=true) => {
     response.map((employer)=>(
         data.push({
             id: employer.id,
+            username: employer.username,
             name: employer.name,
             lastName: employer.lastName,
             age: employer.age,
@@ -33,21 +34,21 @@ const getEmployers = async (stringToken, notExpired=true) => {
     return data
 }
 
-const postEmployer = async (username, name, lastName, age, pessel, street, cityCode, city, phone, position, salary, password, role, stringToken) => {
+const postEmployer = async (register, stringToken) => {
     const employerDto = {
-        username: username,
-        name: name,
-        lastName: lastName,
-        age: age,
-        pessel: pessel,
-        street: street,
-        cityCode: cityCode,
-        city: city,
-        phone: phone,
-        position: position,
-        salary: salary,
-        password: password,
-        role: role
+        username: register.username,
+        name: register.name,
+        lastName: register.lastName,
+        age: register.age,
+        pessel: register.pessel,
+        street: register.street,
+        cityCode: register.cityCode,
+        city: register.city,
+        phone: register.phone,
+        position: register.position,
+        salary: register.salary,
+        password: register.password,
+        role: register.role
     }
     const employer = await fetch('http://localhost:8080/api/employers', {
         method: 'POST',
@@ -67,6 +68,7 @@ const postEmployer = async (username, name, lastName, age, pessel, street, cityC
     })
     return {
         id: employer.id,
+        username: employer.username,
         name: employer.name,
         lastName: employer.lastName,
         age: employer.age,

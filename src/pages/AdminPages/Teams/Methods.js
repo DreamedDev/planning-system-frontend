@@ -68,7 +68,9 @@ export const addEmployerToTeam = (addTeamEmployer, teamId, setTeamId, username, 
             await put('http://localhost:8080/api/employers', dto, sessionStorage.getItem("JWT"))
             const employers = await get('http://localhost:8080/api/employers?teamId='+teamId, sessionStorage.getItem("JWT"))
             setState(employers)
-        } catch (exception){}
+        } catch (exception){
+            alert("Brak pracownika o wskazanej nazwie")
+        }
     }
     if(setTeamId != null && addTeamEmployer.validation === false)
         alert("Wszystkie pola są obowiązkowe")
