@@ -112,8 +112,42 @@ export const deleteTask = (id, data, setData) => {
     deleteTaskAsync()
 }
 
-export const delMaterial = async (id) => {
+const delMaterial = async (id) => {
     await del('http://localhost:8080/api/materials/'+id, sessionStorage.getItem('JWT'))
+}
+
+const delMaterials = async (id) => {
+    const materials = await get('http://localhost:8080/api/materials?taskId='+id, sessionStorage.getItem("JWT"))
+    //console.log(materials)
+    materials.forEach((material)=>{
+        //console.log(material.name)
+        delMaterial(material.id)
+    })
+}
+
+const uncheckTool = async (tool) => {
+    const dto = {
+        id: tool.id,
+        task: {
+            id: -1
+        }
+    }
+    await put('http://localhost:8080/api/tools/', dto, sessionStorage.getItem('JWT'))
+    //await del('http://localhost:8080/api/materials/'+id, sessionStorage.getItem('JWT'))
+}
+
+const uncheckTools = async (id) => {
+    const tools = await get('http://localhost:8080/api/tools?taskId='+id, sessionStorage.getItem("JWT"))
+    //console.log(tools)
+    tools.forEach((tool)=>{
+        //console.log(tool.name)
+        uncheckTool(tool)
+    })
+}
+
+const delTask = async (id, data, setData) => {
+    await del('http://localhost:8080/api/tasks/'+id, sessionStorage.getItem('JWT'))
+    setData(data.filter((team) => team.id !== id))
 }
 
 /*export const unsetTool = async (id) => {
@@ -123,22 +157,11 @@ export const delMaterial = async (id) => {
     await put('http://localhost:8080/api/tools/'+id, dto, sessionStorage.getItem('JWT'))
 }*/
 
-export const finishTask = (id, data, setData) => {
+export const finishTask = (id, data, setData, clear) => {
     const deleteTaskAsync = async () => {
         try {
-            const materials = await get('http://localhost:8080/api/materials?taskId='+id, sessionStorage.getItem("JWT"))
-            //console.log(materials)
-            materials.forEach((material)=>{
-                //console.log(material.name)
-                delMaterial(material.id)
-            })
-            const tools = await get('http://localhost:8080/api/tools?taskId='+id, sessionStorage.getItem("JWT"))
-            //console.log(tools)
-            tools.forEach((tool)=>{
-                //console.log(tool.name)
-            })
-            await del('http://localhost:8080/api/tasks/'+id, sessionStorage.getItem('JWT'))
-            setData(data.filter((team) => team.id !== id))
+            await delMaterials(id).then(()=>uncheckTools(id).then(()=>delTask(id, data, setData)))
+            clear()
         }catch (exception){
 
         }

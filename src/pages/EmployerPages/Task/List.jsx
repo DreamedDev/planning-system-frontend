@@ -43,7 +43,10 @@ export const TaskList = ({data, setData}) => {
     const labels = ['', 'Nazwa', 'Team/Brygadzista', '']
     const sizing = '0.2fr 1.2fr 1.2fr 120px'
     const deleteMethod = (id) => {
-        finishTask(id, data, setData)
+        finishTask(id, data, setData, ()=>{
+            dispatch(setTaskTools([]))
+            dispatch(setTaskMaterials([]))
+        })
         /*clearAllTaskTool()
         clearAllTaskMaterial()
         setTaskTools([])
